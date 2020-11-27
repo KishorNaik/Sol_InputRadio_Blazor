@@ -1,0 +1,50 @@
+﻿@if (this.IsLoad == false)
+{
+    <h2>Loading...</h2>
+}
+else
+{
+    <EditForm Model="this.BlazorSurveyM" Context="frmContext">
+        <DataAnnotationsValidator />
+
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-md-12">
+                    <div class="form-group">
+                        <label>Name:</label>
+                        <InputText @bind-Value="this.BlazorSurveyM.Name" class="form-control"></InputText>
+                        <ValidationMessage For="@(()=> this.BlazorSurveyM.Name)"></ValidationMessage>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-12">
+                    <div class="form-group">
+                        <label>Opinion:</label>
+                        <InputRadioGroup @bind-Value="this.BlazorSurveyM.OpinionAboutBlazor">
+                            @foreach (var opinion in this.Opinions)
+                                {
+                                <div class="form-check">
+                                    <InputRadio class="form-check-input" id="@opinion.id" Value="@opinion.id" />
+                                    <label class="form-check-label" for="@opinion.id">@opinion.lable</label>
+                                </div>
+                                }
+                        </InputRadioGroup>
+                        <ValidationMessage For="@(()=> this.BlazorSurveyM.OpinionAboutBlazor)"></ValidationMessage>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-12">
+                    <button type="submit" class="btn btn-danger" @onclick="@(() => this.OnSubmit(frmContext))">Submit</button>
+                </div>
+                <div class="col-sm-2 col-md-2">
+                    @if (this.Message != null)
+                    {
+                        <span style="color:red">@this.Message</span>
+                    }
+                </div>
+            </div>
+        </div>
+    </EditForm>
+}
